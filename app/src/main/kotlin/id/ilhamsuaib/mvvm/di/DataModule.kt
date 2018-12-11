@@ -5,6 +5,7 @@ import id.ilhamsuaib.mvvm.utils.Constants
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -16,14 +17,14 @@ import java.util.concurrent.TimeUnit
  * github.com/ilhamsuaib
  */
 
-val dataModule = module {
+val dataModule: Module = module {
 
     single(name = Constants.DI_ARTICLES_RETROFIT) {
-        createRetrofit()
+        return@single createRetrofit()
     }
 
     single(name = Constants.DI_API_SERVICE) {
-        createApiService<ApiService>(get(name = Constants.DI_API_SERVICE))
+        return@single createApiService<ApiService>(get(name = Constants.DI_ARTICLES_RETROFIT))
     }
 }
 

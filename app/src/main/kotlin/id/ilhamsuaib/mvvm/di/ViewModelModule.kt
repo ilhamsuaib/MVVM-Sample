@@ -3,6 +3,7 @@ package id.ilhamsuaib.mvvm.di
 import id.ilhamsuaib.mvvm.presentation.features.home.HomeViewModel
 import id.ilhamsuaib.mvvm.utils.Constants
 import org.koin.android.viewmodel.ext.koin.viewModel
+import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 
 /**
@@ -10,7 +11,7 @@ import org.koin.dsl.module.module
  * github.com/ilhamsuaib
  */
 
-val viewModelModule = module {
+val viewModelModule: Module = module {
 
     viewModel { HomeViewModel(get(Constants.DI_HOME_REPOSITORY)) }
 }

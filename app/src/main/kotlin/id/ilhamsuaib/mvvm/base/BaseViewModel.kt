@@ -1,6 +1,7 @@
 package id.ilhamsuaib.mvvm.base
 
 import androidx.lifecycle.ViewModel
+import io.reactivex.disposables.CompositeDisposable
 
 
 /**
@@ -8,4 +9,7 @@ import androidx.lifecycle.ViewModel
  * github.com/ilhamsuaib
  */
 
-open class BaseViewModel : ViewModel()
+open class BaseViewModel : ViewModel() {
+
+    protected val disposables = CompositeDisposable()
+}

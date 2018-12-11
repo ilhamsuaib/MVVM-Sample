@@ -39,7 +39,8 @@ ext {
             koin     : '1.0.2',
             lifecycle: '2.0.0',
             retrofit : '2.5.0',
-            okhttp   : '3.10.0'
+            okhttp   : '3.10.0',
+            rxAndroid: '2.1.0'
     ]
 
     androidxDeps = [
@@ -67,10 +68,15 @@ ext {
             logging       : 'com.squareup.okhttp3:logging-interceptor:' + versions.okhttp
     ]
 
+    rxDeps = [
+            rxAndroid: 'io.reactivex.rxjava2:rxandroid:' + versions.rxAndroid
+    ]
+
     androidx = androidxDeps.values()
     lifecycle = lifecycleDeps.values()
     koin = koinDeps.values()
     network = networkDeps.values()
+    rxJava = rxDeps.values()
 }
 
 dependencies {
@@ -81,6 +87,7 @@ dependencies {
     implementation lifecycle
     implementation koin
     implementation network
+    implementation rxJava
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
