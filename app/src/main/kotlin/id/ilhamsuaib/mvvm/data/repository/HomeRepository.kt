@@ -1,7 +1,7 @@
 package id.ilhamsuaib.mvvm.data.repository
 
 import id.ilhamsuaib.mvvm.presentation.model.Article
-import io.reactivex.Single
+import io.reactivex.Observable
 
 /**
  * Created by @ilhamsuaib on 03/12/18.
@@ -10,5 +10,5 @@ import io.reactivex.Single
 
 interface HomeRepository {
 
-    fun getArticles(): Single<List<Article>>
+    fun getArticles(): Observable<List<Article>>
 }

@@ -7,9 +7,8 @@ import id.ilhamsuaib.mvvm.presentation.model.Article
  * github.com/ilhamsuaib
  */
 
-sealed class HomeSate
-
-object DefaultState : HomeSate()
-data class ArticleLoadedState(val articles: List<Article>) : HomeSate()
-object LoadingState : HomeSate()
-data class ErrorState(val errorMessage: String) : HomeSate()
+sealed class HomeSate {
+    data class ArticleLoadedState(val articles: List<Article>) : HomeSate()
+    data class LoadingState(val show: Boolean) : HomeSate()
+    data class ErrorState(val t: Throwable) : HomeSate()
+}

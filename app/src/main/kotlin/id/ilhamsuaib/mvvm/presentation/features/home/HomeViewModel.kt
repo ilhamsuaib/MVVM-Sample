@@ -21,27 +21,33 @@ class HomeViewModel(private val repo: HomeRepository) : BaseViewModel() {
     val homeSate = MutableLiveData<HomeSate>()
     private val articleList = mutableListOf<Article>()
 
-    init {
-        homeSate.value = DefaultState
-    }
-
     fun getArticles() {
         logD(tag, "getArticles")
         val obs = repo.getArticles()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::onArticleReceived, this::onError)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe {
+                    showProgress(true)
+                }
+                .doOnComplete {
+                    showProgress(false)
+                }
+                .subscribe(this::onArticleReceived, this::onError)
 
         disposables.add(obs)
     }
 
+    private fun showProgress(show: Boolean) {
+        homeSate.value = HomeSate.LoadingState(show)
+    }
+
     private fun onArticleReceived(articleList: List<Article>) {
         this.articleList.addAll(articleList)
-        homeSate.value = ArticleLoadedState(this.articleList)
+        homeSate.value = HomeSate.ArticleLoadedState(this.articleList)
     }
 
     private fun onError(t: Throwable) {
-        homeSate.value = ErrorState(t.localizedMessage)
+        homeSate.value = HomeSate.ErrorState(t)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

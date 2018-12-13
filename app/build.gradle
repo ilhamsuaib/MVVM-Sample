@@ -40,13 +40,15 @@ ext {
             lifecycle: '2.0.0',
             retrofit : '2.5.0',
             okhttp   : '3.10.0',
-            rxAndroid: '2.1.0'
+            rxAndroid: '2.1.0',
+            glide    : '4.8.0'
     ]
 
     androidxDeps = [
             appCompat       : 'androidx.appcompat:appcompat:' + versions.appCompat,
             material        : 'com.google.android.material:material:1.1.0-alpha01',
-            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+            constraintlayout: 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2',
+            workManager     : 'android.arch.work:work-runtime:1.0.0-alpha12'
     ]
 
     lifecycleDeps = [
@@ -72,22 +74,23 @@ ext {
             rxAndroid: 'io.reactivex.rxjava2:rxandroid:' + versions.rxAndroid
     ]
 
-    androidx = androidxDeps.values()
-    lifecycle = lifecycleDeps.values()
-    koin = koinDeps.values()
-    network = networkDeps.values()
-    rxJava = rxDeps.values()
+    otherDeps = [
+            glide: 'com.github.bumptech.glide:glide:' + versions.glide
+    ]
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation androidx
-    implementation lifecycle
-    implementation koin
-    implementation network
-    implementation rxJava
+    implementation androidxDeps.values()
+    implementation lifecycleDeps.values()
+    implementation koinDeps.values()
+    implementation networkDeps.values()
+    implementation rxDeps.values()
+    implementation otherDeps.values()
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:' + versions.glide
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
