@@ -24,15 +24,15 @@ class HomeViewModel(private val repo: HomeRepository) : BaseViewModel() {
     fun getArticles() {
         logD(tag, "getArticles")
         val obs = repo.getArticles()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    showProgress(true)
-                }
-                .doOnComplete {
-                    showProgress(false)
-                }
-                .subscribe(this::onArticleReceived, this::onError)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe {
+                showProgress(true)
+            }
+            .doOnComplete {
+                showProgress(false)
+            }
+            .subscribe(this::onArticleReceived, this::onError)
 
         disposables.add(obs)
     }
@@ -54,5 +54,9 @@ class HomeViewModel(private val repo: HomeRepository) : BaseViewModel() {
     fun dispose() {
         if (!disposables.isDisposed)
             disposables.dispose()
+    }
+
+    fun restoreObservedData() {
+        homeSate.value = HomeSate.ArticleLoadedState(this.articleList)
     }
 }

@@ -1,10 +1,13 @@
 package id.ilhamsuaib.mvvm.di
 
+import androidx.room.Room
+import id.ilhamsuaib.mvvm.data.local.LocalDatabase
 import id.ilhamsuaib.mvvm.data.remote.ApiService
 import id.ilhamsuaib.mvvm.utils.Constants
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.Module
 import org.koin.dsl.module.module
 import retrofit2.Retrofit
@@ -25,6 +28,12 @@ val dataModule: Module = module {
 
     single(name = Constants.DI_API_SERVICE) {
         return@single createApiService<ApiService>(get(name = Constants.DI_ARTICLES_RETROFIT))
+    }
+
+    single {
+        Room.databaseBuilder(androidApplication(), LocalDatabase::class.java, Constants.DB.DB_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 }
 

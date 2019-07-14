@@ -11,4 +11,10 @@ object Constants {
     const val DI_HOME_REPOSITORY = "di_home_repository"
     const val DI_API_SERVICE = "di_api_service"
     const val DI_ARTICLES_RETROFIT = "di_articles_retrofit"
+
+    object DB {
+        const val DB_NAME = "news_mvvm.db"
+        //table name
+        const val ARTICLE = "tbl_articles"
+    }
 }

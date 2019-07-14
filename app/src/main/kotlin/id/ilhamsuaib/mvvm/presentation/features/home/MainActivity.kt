@@ -28,7 +28,7 @@ class MainActivity : BaseActivity(), Observer<HomeSate> {
 
         setupView()
 
-        viewModel.getArticles()
+        savedInstanceState?.let { viewModel.restoreObservedData() } ?: viewModel.getArticles()
     }
 
     private fun setupView() {
@@ -36,11 +36,6 @@ class MainActivity : BaseActivity(), Observer<HomeSate> {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = articleAdapter
         }
-    }
-
-    override fun onDestroy() {
-        viewModel.dispose()
-        super.onDestroy()
     }
 
     override fun onChanged(state: HomeSate?) {
@@ -52,13 +47,10 @@ class MainActivity : BaseActivity(), Observer<HomeSate> {
     }
 
     private fun onItemClick(article: Article) {
-        logD(tag, "onItemClick: ${article.toJson()}")
         toast(article.title)
     }
 
     private fun showArticles(articles: List<Article>) {
-        toast("Show articles : ${articles.size}")
-
         this.articleList.addAll(articles)
         val positionStart = articleAdapter.itemCount
         val itemCount = this.articleList.size
@@ -66,7 +58,6 @@ class MainActivity : BaseActivity(), Observer<HomeSate> {
     }
 
     private fun showProgress(show: Boolean) {
-        toast("Show progress : $show")
         progressBar.visibility = if (show) View.VISIBLE else View.GONE
     }
 

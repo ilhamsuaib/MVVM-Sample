@@ -1,5 +1,6 @@
 package id.ilhamsuaib.mvvm.data.repository
 
+import id.ilhamsuaib.mvvm.data.local.entity.ArticleEntity
 import id.ilhamsuaib.mvvm.data.remote.ApiService
 import id.ilhamsuaib.mvvm.presentation.model.Article
 import id.ilhamsuaib.mvvm.utils.logD
@@ -11,6 +12,10 @@ import io.reactivex.Observable
  */
 
 class HomeRepositoryImpl(val api: ApiService) : HomeRepository {
+
+    override fun insertToDb(article: ArticleEntity) {
+
+    }
 
     private val tag = HomeRepositoryImpl::class.java.simpleName
 

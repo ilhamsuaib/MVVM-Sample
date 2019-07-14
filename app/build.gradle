@@ -34,15 +34,6 @@ android {
 }
 
 ext {
-    versions = [
-            appCompat: '1.0.2',
-            koin     : '1.0.2',
-            lifecycle: '2.0.0',
-            retrofit : '2.5.0',
-            okhttp   : '3.10.0',
-            rxAndroid: '2.1.0',
-            glide    : '4.8.0'
-    ]
 
     androidxDeps = [
             appCompat       : 'androidx.appcompat:appcompat:' + versions.appCompat,
@@ -54,6 +45,11 @@ ext {
     lifecycleDeps = [
             lifecycleExt    : 'androidx.lifecycle:lifecycle-extensions:' + versions.lifecycle,
             lifecycleStreams: 'androidx.lifecycle:lifecycle-reactivestreams:' + versions.lifecycle
+    ]
+
+    roomDeps = [
+            roomRuntime: 'android.arch.persistence.room:runtime:' + versions.room,
+            roomRxJava : 'android.arch.persistence.room:rxjava2:' + versions.room
     ]
 
     koinDeps = [
@@ -81,7 +77,7 @@ ext {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:' + versions.kotlin
 
     implementation androidxDeps.values()
     implementation lifecycleDeps.values()
@@ -90,6 +86,7 @@ dependencies {
     implementation rxDeps.values()
     implementation otherDeps.values()
 
+    annotationProcessor 'android.arch.persistence.room:compiler:' + versions.room
     annotationProcessor 'com.github.bumptech.glide:compiler:' + versions.glide
 
     testImplementation 'junit:junit:4.12'

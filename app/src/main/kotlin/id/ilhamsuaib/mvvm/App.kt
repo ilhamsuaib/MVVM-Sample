@@ -2,14 +2,16 @@ package id.ilhamsuaib.mvvm
 
 import android.app.Application
 import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import id.ilhamsuaib.mvvm.di.dataModule
 import id.ilhamsuaib.mvvm.di.repositoryModule
 import id.ilhamsuaib.mvvm.di.viewModelModule
 import id.ilhamsuaib.mvvm.works.RefreshArticleWork
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import java.util.concurrent.TimeUnit
 
 /**
@@ -22,14 +24,14 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        this.startKoin()
+        startKoin {
+            androidContext(this@App)
+            androidLogger(Level.ERROR)
+            modules(dataModule, repositoryModule, viewModelModule)
+        }
+
         setupWorkManagerJob()
     }
-
-    private fun startKoin() {
-        startKoin(this, listOf(dataModule, repositoryModule, viewModelModule))
-    }
-
     /**
      * Setup WorkManager background job to 'fetch' new network data daily.
      */
@@ -50,6 +52,6 @@ class App : Application() {
         work.*/
         WorkManager.getInstance()
             .enqueue(work)
-            /*.enqueueUniquePeriodicWork(RefreshArticleWork::class.java.name, ExistingPeriodicWorkPolicy.KEEP, work)*/
+        /*.enqueueUniquePeriodicWork(RefreshArticleWork::class.java.name, ExistingPeriodicWorkPolicy.KEEP, work)*/
     }
 }
